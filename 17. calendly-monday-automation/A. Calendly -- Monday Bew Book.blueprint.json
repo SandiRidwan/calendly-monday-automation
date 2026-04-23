@@ -1,0 +1,1608 @@
+{
+    "name": "A. Calendly -> Monday Bew Book",
+    "flow": [
+        {
+            "id": 1,
+            "module": "calendly:watchInvitees",
+            "version": 2,
+            "parameters": {
+                "__IMTHOOK__": 2890785
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -300,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "My Calendly Event webhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:calendly4",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 22,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "filter": null,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 14,
+                            "module": "monday:CreateItemV2",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 6842551
+                            },
+                            "filter": {
+                                "name": "Item Not Found",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.email}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "name": "{{1.name}}",
+                                "boardId": "5027984852",
+                                "groupId": "group_mm2n4cww",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "text_mm2nxgsp",
+                                        "columnValue": "{{1.name}}"
+                                    },
+                                    {
+                                        "columnId": "email_mm2ndqke",
+                                        "columnValue": {
+                                            "text": "{{1.email}}",
+                                            "email": "{{1.email}}"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "dropdown_mm2nwhxr",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{if(contains(1.scheduled_event.name; \"Camp\"); \"Camp\"; \"Intensive\")}}"
+                                            ],
+                                            "settings": {
+                                                "labels": [
+                                                    {
+                                                        "id": 1,
+                                                        "label": "Camp",
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 3,
+                                                        "label": "Intensive",
+                                                        "is_deactivated": false
+                                                    }
+                                                ]
+                                            },
+                                            "selectType": "label2id"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "date_mm2n22j4",
+                                        "columnValue": {
+                                            "date": "{{1.scheduled_event.start_time}}",
+                                            "includeTime": true
+                                        }
+                                    },
+                                    {
+                                        "columnId": "color_mm2npher",
+                                        "columnValue": {
+                                            "label": "Call Scheduled",
+                                            "selectType": "label2index"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "text_mm2n94cf",
+                                        "columnValue": "{{1.scheduled_event.location.location}}"
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 427,
+                                    "y": -118
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "admin  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Prospects"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Name"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Email"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Program Type"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Call Date"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "includeTime": {
+                                                                "mode": "chose"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "chose",
+                                                                "label": "Call Scheduled"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Phone"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "create_labels_if_missing": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection (sandyzvosters-team - Sandi Ridwan)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "options": [
+                                                    {
+                                                        "label": "Call Date",
+                                                        "value": "date_mm2n22j4",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "date",
+                                                                        "type": "date",
+                                                                        "label": "Date",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "includeTime",
+                                                                        "type": "boolean",
+                                                                        "label": "Include Time",
+                                                                        "default": false,
+                                                                        "editable": false,
+                                                                        "required": true,
+                                                                        "validate": false
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Email",
+                                                        "value": "email_mm2ndqke",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "email",
+                                                                        "type": "email",
+                                                                        "label": "Email",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "text",
+                                                                        "type": "text",
+                                                                        "label": "Text",
+                                                                        "required": true
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Name",
+                                                        "value": "text_mm2nxgsp",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "type": "text",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Notes",
+                                                        "value": "long_text_mm2n7bw8",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "text",
+                                                                        "type": "text",
+                                                                        "label": "Text",
+                                                                        "required": true
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Phone",
+                                                        "value": "text_mm2n94cf",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "type": "text",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Program Type",
+                                                        "value": "dropdown_mm2nwhxr",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "selectType",
+                                                                        "type": "select",
+                                                                        "label": "Index/Label",
+                                                                        "options": [
+                                                                            {
+                                                                                "label": "ID",
+                                                                                "value": "id2id",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "help": "**To clear previous choices sent an empty array.**\nIf you map this value yourself, prepare an array of integers (e.g. using our functions parseNumber and split).",
+                                                                                        "name": "ids",
+                                                                                        "spec": {
+                                                                                            "type": "select",
+                                                                                            "label": "ID",
+                                                                                            "options": [
+                                                                                                {
+                                                                                                    "label": "Camp",
+                                                                                                    "value": 1
+                                                                                                },
+                                                                                                {
+                                                                                                    "label": "Intensive",
+                                                                                                    "value": 3
+                                                                                                }
+                                                                                            ],
+                                                                                            "editable": true,
+                                                                                            "required": true
+                                                                                        },
+                                                                                        "type": "array",
+                                                                                        "label": "IDs"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "label": "Label",
+                                                                                "value": "label2id",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "help": "**To clear previous choices sent an empty array.**",
+                                                                                        "name": "labels",
+                                                                                        "spec": {
+                                                                                            "type": "select",
+                                                                                            "label": "Label",
+                                                                                            "options": [
+                                                                                                {
+                                                                                                    "label": "Camp",
+                                                                                                    "value": "Camp"
+                                                                                                },
+                                                                                                {
+                                                                                                    "label": "Intensive",
+                                                                                                    "value": "Intensive"
+                                                                                                }
+                                                                                            ],
+                                                                                            "editable": true,
+                                                                                            "required": true,
+                                                                                            "validate": false
+                                                                                        },
+                                                                                        "type": "array",
+                                                                                        "label": "Labels"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "settings",
+                                                                                        "type": "hidden",
+                                                                                        "default": {
+                                                                                            "labels": [
+                                                                                                {
+                                                                                                    "id": 1,
+                                                                                                    "label": "Camp",
+                                                                                                    "is_deactivated": false
+                                                                                                },
+                                                                                                {
+                                                                                                    "id": 3,
+                                                                                                    "label": "Intensive",
+                                                                                                    "is_deactivated": false
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ],
+                                                                        "editable": false,
+                                                                        "required": true
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Start Date",
+                                                        "value": "date_mm2n100g",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "date",
+                                                                        "type": "date",
+                                                                        "label": "Date",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "includeTime",
+                                                                        "type": "boolean",
+                                                                        "label": "Include Time",
+                                                                        "default": false,
+                                                                        "editable": false,
+                                                                        "required": true,
+                                                                        "validate": false
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Status",
+                                                        "value": "color_mm2npher",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "selectType",
+                                                                        "type": "select",
+                                                                        "label": "Index/Label",
+                                                                        "options": [
+                                                                            {
+                                                                                "label": "Index",
+                                                                                "value": "index2index",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "name": "index",
+                                                                                        "type": "select",
+                                                                                        "label": "Index",
+                                                                                        "options": [
+                                                                                            {
+                                                                                                "label": "Form Completed",
+                                                                                                "value": "0"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Lead",
+                                                                                                "value": "1"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Deposit Pending",
+                                                                                                "value": "2"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Enrolled",
+                                                                                                "value": "3"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Needs Scheduling",
+                                                                                                "value": "4"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "-",
+                                                                                                "value": "5"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Call Scheduled",
+                                                                                                "value": "6"
+                                                                                            }
+                                                                                        ],
+                                                                                        "editable": true,
+                                                                                        "required": true
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "label": "Label",
+                                                                                "value": "label2index",
+                                                                                "nested": [
+                                                                                    {
+                                                                                        "name": "label",
+                                                                                        "type": "select",
+                                                                                        "label": "Label",
+                                                                                        "options": [
+                                                                                            {
+                                                                                                "label": "Form Completed",
+                                                                                                "value": "Form Completed"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Lead",
+                                                                                                "value": "Lead"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Deposit Pending",
+                                                                                                "value": "Deposit Pending"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Enrolled",
+                                                                                                "value": "Enrolled"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Needs Scheduling",
+                                                                                                "value": "Needs Scheduling"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "-",
+                                                                                                "value": "-"
+                                                                                            },
+                                                                                            {
+                                                                                                "label": "Call Scheduled",
+                                                                                                "value": "Call Scheduled"
+                                                                                            }
+                                                                                        ],
+                                                                                        "editable": true,
+                                                                                        "required": true,
+                                                                                        "validate": false
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ],
+                                                                        "editable": false,
+                                                                        "required": true
+                                                                    }
+                                                                ],
+                                                                "type": "collection",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "label": "Teacher",
+                                                        "value": "text_mm2n6hay",
+                                                        "nested": [
+                                                            {
+                                                                "name": "columnValue",
+                                                                "type": "text",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 21,
+                            "module": "monday:ListItemsByColumnValuesV2",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 6842551
+                            },
+                            "filter": {
+                                "name": "Item Found",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.email}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "limit": "10",
+                                "boardId": "5027984852",
+                                "columnId": "email_mm2ndqke",
+                                "columnValue": "{{1.email}}",
+                                "showParentID": false,
+                                "showSubitemsID": false,
+                                "disableOutputInterfaceCaching": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 406,
+                                    "y": 191
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "admin  ::  public"
+                                        },
+                                        "columnId": {
+                                            "mode": "chose",
+                                            "label": "Email"
+                                        },
+                                        "filterToGetColumnValues": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection (sandyzvosters-team - Sandi Ridwan)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "showParentID",
+                                        "type": "boolean",
+                                        "label": "Show Parent ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "showSubitemsID",
+                                        "type": "boolean",
+                                        "label": "Show Subitems ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "startPage",
+                                        "type": "uinteger",
+                                        "label": "Start Page"
+                                    },
+                                    {
+                                        "name": "disableOutputInterfaceCaching",
+                                        "type": "boolean",
+                                        "label": "Disable Output Interface Caching",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "limit",
+                                        "type": "uinteger",
+                                        "label": "Limit",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnId",
+                                        "type": "select",
+                                        "label": "Column ID to Search the Value",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "filterToGetColumnValues",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "select",
+                                            "label": "Column ID",
+                                            "dynamic": true,
+                                            "options": [],
+                                            "required": true
+                                        },
+                                        "type": "array",
+                                        "label": "Output Column Values"
+                                    },
+                                    {
+                                        "name": "columnValue",
+                                        "type": "text",
+                                        "label": "Column Value",
+                                        "required": true
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "__IMTLENGTH__",
+                                        "type": "uinteger",
+                                        "label": "Total number of bundles"
+                                    },
+                                    {
+                                        "name": "__IMTINDEX__",
+                                        "type": "uinteger",
+                                        "label": "Bundle order position"
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Name"
+                                    },
+                                    {
+                                        "name": "created_at",
+                                        "type": "date",
+                                        "label": "Created at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_created_at",
+                                        "type": "date",
+                                        "label": "Formatted Created at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "board",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Board"
+                                    },
+                                    {
+                                        "name": "creator_id",
+                                        "type": "uinteger",
+                                        "label": "Creator ID"
+                                    },
+                                    {
+                                        "name": "group",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Group"
+                                    },
+                                    {
+                                        "name": "column_values",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            },
+                                            {
+                                                "name": "linked_item_ids",
+                                                "type": "array",
+                                                "label": "Linked Item IDs"
+                                            },
+                                            {
+                                                "name": "linked_items",
+                                                "spec": {
+                                                    "spec": [
+                                                        {
+                                                            "name": "name",
+                                                            "type": "text",
+                                                            "label": "Name"
+                                                        },
+                                                        {
+                                                            "name": "updated_at",
+                                                            "type": "date",
+                                                            "label": "Updated at"
+                                                        },
+                                                        {
+                                                            "name": "formatted_updated_at",
+                                                            "type": "date",
+                                                            "label": "Formatted Updated at"
+                                                        }
+                                                    ],
+                                                    "type": "collection"
+                                                },
+                                                "type": "array",
+                                                "label": "Linked Items"
+                                            },
+                                            {
+                                                "name": "additional_info",
+                                                "type": "text",
+                                                "label": "Additional Info"
+                                            },
+                                            {
+                                                "name": "text",
+                                                "type": "text",
+                                                "label": "Text"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values"
+                                    },
+                                    {
+                                        "name": "parent_item",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Parent Item"
+                                    },
+                                    {
+                                        "name": "subitems",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Subitems"
+                                    },
+                                    {
+                                        "name": "mappable_column_values",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "text_mm2nxgsp",
+                                                "type": "text",
+                                                "label": "Name"
+                                            },
+                                            {
+                                                "name": "email_mm2ndqke",
+                                                "spec": [
+                                                    {
+                                                        "name": "email",
+                                                        "type": "email",
+                                                        "label": "Email"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "updated_at",
+                                                        "type": "date",
+                                                        "label": "Updated at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_changed_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Changed at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_updated_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Updated at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            },
+                                                            {
+                                                                "name": "color",
+                                                                "type": "color",
+                                                                "label": "Color"
+                                                            },
+                                                            {
+                                                                "name": "changed_at",
+                                                                "type": "date",
+                                                                "label": "Changed at"
+                                                            },
+                                                            {
+                                                                "name": "formatted_changed_at",
+                                                                "type": "date",
+                                                                "label": "Formatted Changed at"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Additional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Email"
+                                            },
+                                            {
+                                                "name": "text_mm2n94cf",
+                                                "type": "text",
+                                                "label": "Phone"
+                                            },
+                                            {
+                                                "name": "dropdown_mm2nwhxr",
+                                                "spec": [
+                                                    {
+                                                        "name": "ids",
+                                                        "spec": {
+                                                            "type": "number"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "IDs"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "updated_at",
+                                                        "type": "date",
+                                                        "label": "Updated at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_changed_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Changed at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_updated_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Updated at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            },
+                                                            {
+                                                                "name": "color",
+                                                                "type": "color",
+                                                                "label": "Color"
+                                                            },
+                                                            {
+                                                                "name": "changed_at",
+                                                                "type": "date",
+                                                                "label": "Changed at"
+                                                            },
+                                                            {
+                                                                "name": "formatted_changed_at",
+                                                                "type": "date",
+                                                                "label": "Formatted Changed at"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Additional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Program Type"
+                                            },
+                                            {
+                                                "name": "date_mm2n22j4",
+                                                "spec": [
+                                                    {
+                                                        "name": "date",
+                                                        "type": "date",
+                                                        "label": "Date"
+                                                    },
+                                                    {
+                                                        "name": "formatted_date",
+                                                        "type": "date",
+                                                        "label": "Formatted Date"
+                                                    },
+                                                    {
+                                                        "name": "time",
+                                                        "type": "date",
+                                                        "label": "Time"
+                                                    },
+                                                    {
+                                                        "name": "formatted_text",
+                                                        "type": "date",
+                                                        "label": "Formatted Text"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "updated_at",
+                                                        "type": "date",
+                                                        "label": "Updated at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_changed_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Changed at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_updated_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Updated at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            },
+                                                            {
+                                                                "name": "color",
+                                                                "type": "color",
+                                                                "label": "Color"
+                                                            },
+                                                            {
+                                                                "name": "changed_at",
+                                                                "type": "date",
+                                                                "label": "Changed at"
+                                                            },
+                                                            {
+                                                                "name": "formatted_changed_at",
+                                                                "type": "date",
+                                                                "label": "Formatted Changed at"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Additional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Call Date"
+                                            },
+                                            {
+                                                "name": "date_mm2n100g",
+                                                "spec": [
+                                                    {
+                                                        "name": "date",
+                                                        "type": "date",
+                                                        "label": "Date"
+                                                    },
+                                                    {
+                                                        "name": "formatted_date",
+                                                        "type": "date",
+                                                        "label": "Formatted Date"
+                                                    },
+                                                    {
+                                                        "name": "time",
+                                                        "type": "date",
+                                                        "label": "Time"
+                                                    },
+                                                    {
+                                                        "name": "formatted_text",
+                                                        "type": "date",
+                                                        "label": "Formatted Text"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "updated_at",
+                                                        "type": "date",
+                                                        "label": "Updated at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_changed_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Changed at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_updated_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Updated at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            },
+                                                            {
+                                                                "name": "color",
+                                                                "type": "color",
+                                                                "label": "Color"
+                                                            },
+                                                            {
+                                                                "name": "changed_at",
+                                                                "type": "date",
+                                                                "label": "Changed at"
+                                                            },
+                                                            {
+                                                                "name": "formatted_changed_at",
+                                                                "type": "date",
+                                                                "label": "Formatted Changed at"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Additional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Start Date"
+                                            },
+                                            {
+                                                "name": "color_mm2npher",
+                                                "spec": [
+                                                    {
+                                                        "name": "index",
+                                                        "type": "text",
+                                                        "label": "Index"
+                                                    },
+                                                    {
+                                                        "name": "post_id",
+                                                        "type": "text",
+                                                        "label": "Post ID"
+                                                    },
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "updated_at",
+                                                        "type": "date",
+                                                        "label": "Updated at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_changed_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Changed at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_updated_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Updated at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            },
+                                                            {
+                                                                "name": "color",
+                                                                "type": "color",
+                                                                "label": "Color"
+                                                            },
+                                                            {
+                                                                "name": "changed_at",
+                                                                "type": "date",
+                                                                "label": "Changed at"
+                                                            },
+                                                            {
+                                                                "name": "formatted_changed_at",
+                                                                "type": "date",
+                                                                "label": "Formatted Changed at"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Additional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Status"
+                                            },
+                                            {
+                                                "name": "text_mm2n6hay",
+                                                "type": "text",
+                                                "label": "Teacher"
+                                            },
+                                            {
+                                                "name": "long_text_mm2n7bw8",
+                                                "spec": [
+                                                    {
+                                                        "name": "changed_at",
+                                                        "type": "date",
+                                                        "label": "Changed at"
+                                                    },
+                                                    {
+                                                        "name": "updated_at",
+                                                        "type": "date",
+                                                        "label": "Updated at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_changed_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Changed at"
+                                                    },
+                                                    {
+                                                        "name": "formatted_updated_at",
+                                                        "type": "date",
+                                                        "label": "Formatted Updated at"
+                                                    },
+                                                    {
+                                                        "name": "additonal_info",
+                                                        "spec": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "text",
+                                                                "label": "Label"
+                                                            },
+                                                            {
+                                                                "name": "color",
+                                                                "type": "color",
+                                                                "label": "Color"
+                                                            },
+                                                            {
+                                                                "name": "changed_at",
+                                                                "type": "date",
+                                                                "label": "Changed at"
+                                                            },
+                                                            {
+                                                                "name": "formatted_changed_at",
+                                                                "type": "date",
+                                                                "label": "Formatted Changed at"
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Additional info"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Value"
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "type": "text",
+                                                        "label": "Text"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Notes"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Mappable column values"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 23,
+                            "module": "monday:ChangeMultipleColumnValuesV2",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 6842551
+                            },
+                            "mapper": {
+                                "boardId": "5027984852",
+                                "create_labels_if_missing": false,
+                                "itemId": "{{21.id}}",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "color_mm2npher",
+                                        "columnValue": {
+                                            "selectType": "label2index",
+                                            "label": "Call Scheduled",
+                                            "settings": {
+                                                "labels": [
+                                                    {
+                                                        "id": 0,
+                                                        "color": 9,
+                                                        "label": "Form Completed",
+                                                        "index": 2,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#ffcb00"
+                                                    },
+                                                    {
+                                                        "id": 1,
+                                                        "color": 154,
+                                                        "label": "Lead",
+                                                        "index": 1,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#a9bee8"
+                                                    },
+                                                    {
+                                                        "id": 2,
+                                                        "color": 19,
+                                                        "label": "Deposit Pending",
+                                                        "index": 3,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#ff6d3b"
+                                                    },
+                                                    {
+                                                        "id": 3,
+                                                        "color": 1,
+                                                        "label": "Enrolled",
+                                                        "index": 4,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#00c875"
+                                                    },
+                                                    {
+                                                        "id": 4,
+                                                        "color": 2,
+                                                        "label": "Needs Scheduling",
+                                                        "index": 5,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#df2f4a"
+                                                    },
+                                                    {
+                                                        "id": 5,
+                                                        "color": 5,
+                                                        "label": "-",
+                                                        "index": 0,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#c4c4c4"
+                                                    },
+                                                    {
+                                                        "id": 6,
+                                                        "color": 153,
+                                                        "label": "Call Scheduled",
+                                                        "index": 6,
+                                                        "is_done": false,
+                                                        "is_deactivated": false,
+                                                        "hex": "#216edf"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 706,
+                                    "y": 191
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "My Monday v2 connection (sandyzvosters-team - Sandi Ridwan)",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "admin  ::  public"
+                                        },
+                                        "create_labels_if_missing": {
+                                            "mode": "chose"
+                                        },
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            },
+                                                            "label": {
+                                                                "mode": "chose",
+                                                                "label": "Call Scheduled"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true,
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false,
+                                                "dynamic": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    }
+}

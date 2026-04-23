@@ -1,0 +1,1060 @@
+{
+    "name": "B. Calendly Monday Cancellation Handler",
+    "flow": [
+        {
+            "id": 1,
+            "module": "calendly:watchInvitees",
+            "version": 2,
+            "parameters": {
+                "__IMTHOOK__": 2895584
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -300,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "My Calendly Event webhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:calendly4",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "monday:ListItemsByColumnValuesV2",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 6842551
+            },
+            "mapper": {
+                "limit": "10",
+                "boardId": "5027984852",
+                "columnId": "email_mm2ndqke",
+                "columnValue": "{{1.email}}",
+                "showParentID": false,
+                "showSubitemsID": false,
+                "disableOutputInterfaceCaching": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "mode": "chose",
+                            "label": "admin  ::  public"
+                        },
+                        "columnId": {
+                            "mode": "chose",
+                            "label": "Email"
+                        },
+                        "filterToGetColumnValues": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection (sandyzvosters-team - Sandi Ridwan)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentID",
+                        "type": "boolean",
+                        "label": "Show Parent ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitemsID",
+                        "type": "boolean",
+                        "label": "Show Subitems ID",
+                        "required": true
+                    },
+                    {
+                        "name": "startPage",
+                        "type": "uinteger",
+                        "label": "Start Page"
+                    },
+                    {
+                        "name": "disableOutputInterfaceCaching",
+                        "type": "boolean",
+                        "label": "Disable Output Interface Caching",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "required": true
+                    },
+                    {
+                        "name": "columnId",
+                        "type": "select",
+                        "label": "Column ID to Search the Value",
+                        "required": true
+                    },
+                    {
+                        "name": "filterToGetColumnValues",
+                        "spec": {
+                            "name": "value",
+                            "type": "select",
+                            "label": "Column ID",
+                            "dynamic": true,
+                            "options": [],
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "Output Column Values"
+                    },
+                    {
+                        "name": "columnValue",
+                        "type": "text",
+                        "label": "Column Value",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "formatted_created_at",
+                        "type": "date",
+                        "label": "Formatted Created at"
+                    },
+                    {
+                        "name": "formatted_updated_at",
+                        "type": "date",
+                        "label": "Formatted Updated at"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "linked_item_ids",
+                                "type": "array",
+                                "label": "Linked Item IDs"
+                            },
+                            {
+                                "name": "linked_items",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "name",
+                                            "type": "text",
+                                            "label": "Name"
+                                        },
+                                        {
+                                            "name": "updated_at",
+                                            "type": "date",
+                                            "label": "Updated at"
+                                        },
+                                        {
+                                            "name": "formatted_updated_at",
+                                            "type": "date",
+                                            "label": "Formatted Updated at"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array",
+                                "label": "Linked Items"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "text_mm2nxgsp",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "email_mm2ndqke",
+                                "spec": [
+                                    {
+                                        "name": "email",
+                                        "type": "email",
+                                        "label": "Email"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_changed_at",
+                                        "type": "date",
+                                        "label": "Formatted Changed at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            },
+                                            {
+                                                "name": "color",
+                                                "type": "color",
+                                                "label": "Color"
+                                            },
+                                            {
+                                                "name": "changed_at",
+                                                "type": "date",
+                                                "label": "Changed at"
+                                            },
+                                            {
+                                                "name": "formatted_changed_at",
+                                                "type": "date",
+                                                "label": "Formatted Changed at"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Additional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Email"
+                            },
+                            {
+                                "name": "text_mm2n94cf",
+                                "type": "text",
+                                "label": "Phone"
+                            },
+                            {
+                                "name": "dropdown_mm2nwhxr",
+                                "spec": [
+                                    {
+                                        "name": "ids",
+                                        "spec": {
+                                            "type": "number"
+                                        },
+                                        "type": "array",
+                                        "label": "IDs"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_changed_at",
+                                        "type": "date",
+                                        "label": "Formatted Changed at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            },
+                                            {
+                                                "name": "color",
+                                                "type": "color",
+                                                "label": "Color"
+                                            },
+                                            {
+                                                "name": "changed_at",
+                                                "type": "date",
+                                                "label": "Changed at"
+                                            },
+                                            {
+                                                "name": "formatted_changed_at",
+                                                "type": "date",
+                                                "label": "Formatted Changed at"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Additional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Program Type"
+                            },
+                            {
+                                "name": "date_mm2n22j4",
+                                "spec": [
+                                    {
+                                        "name": "date",
+                                        "type": "date",
+                                        "label": "Date"
+                                    },
+                                    {
+                                        "name": "formatted_date",
+                                        "type": "date",
+                                        "label": "Formatted Date"
+                                    },
+                                    {
+                                        "name": "time",
+                                        "type": "date",
+                                        "label": "Time"
+                                    },
+                                    {
+                                        "name": "formatted_text",
+                                        "type": "date",
+                                        "label": "Formatted Text"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_changed_at",
+                                        "type": "date",
+                                        "label": "Formatted Changed at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            },
+                                            {
+                                                "name": "color",
+                                                "type": "color",
+                                                "label": "Color"
+                                            },
+                                            {
+                                                "name": "changed_at",
+                                                "type": "date",
+                                                "label": "Changed at"
+                                            },
+                                            {
+                                                "name": "formatted_changed_at",
+                                                "type": "date",
+                                                "label": "Formatted Changed at"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Additional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Call Date"
+                            },
+                            {
+                                "name": "date_mm2n100g",
+                                "spec": [
+                                    {
+                                        "name": "date",
+                                        "type": "date",
+                                        "label": "Date"
+                                    },
+                                    {
+                                        "name": "formatted_date",
+                                        "type": "date",
+                                        "label": "Formatted Date"
+                                    },
+                                    {
+                                        "name": "time",
+                                        "type": "date",
+                                        "label": "Time"
+                                    },
+                                    {
+                                        "name": "formatted_text",
+                                        "type": "date",
+                                        "label": "Formatted Text"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_changed_at",
+                                        "type": "date",
+                                        "label": "Formatted Changed at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            },
+                                            {
+                                                "name": "color",
+                                                "type": "color",
+                                                "label": "Color"
+                                            },
+                                            {
+                                                "name": "changed_at",
+                                                "type": "date",
+                                                "label": "Changed at"
+                                            },
+                                            {
+                                                "name": "formatted_changed_at",
+                                                "type": "date",
+                                                "label": "Formatted Changed at"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Additional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Start Date"
+                            },
+                            {
+                                "name": "color_mm2npher",
+                                "spec": [
+                                    {
+                                        "name": "index",
+                                        "type": "text",
+                                        "label": "Index"
+                                    },
+                                    {
+                                        "name": "post_id",
+                                        "type": "text",
+                                        "label": "Post ID"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_changed_at",
+                                        "type": "date",
+                                        "label": "Formatted Changed at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            },
+                                            {
+                                                "name": "color",
+                                                "type": "color",
+                                                "label": "Color"
+                                            },
+                                            {
+                                                "name": "changed_at",
+                                                "type": "date",
+                                                "label": "Changed at"
+                                            },
+                                            {
+                                                "name": "formatted_changed_at",
+                                                "type": "date",
+                                                "label": "Formatted Changed at"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Additional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Status"
+                            },
+                            {
+                                "name": "text_mm2n6hay",
+                                "type": "text",
+                                "label": "Teacher"
+                            },
+                            {
+                                "name": "long_text_mm2n7bw8",
+                                "spec": [
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "updated_at",
+                                        "type": "date",
+                                        "label": "Updated at"
+                                    },
+                                    {
+                                        "name": "formatted_changed_at",
+                                        "type": "date",
+                                        "label": "Formatted Changed at"
+                                    },
+                                    {
+                                        "name": "formatted_updated_at",
+                                        "type": "date",
+                                        "label": "Formatted Updated at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            },
+                                            {
+                                                "name": "color",
+                                                "type": "color",
+                                                "label": "Color"
+                                            },
+                                            {
+                                                "name": "changed_at",
+                                                "type": "date",
+                                                "label": "Changed at"
+                                            },
+                                            {
+                                                "name": "formatted_changed_at",
+                                                "type": "date",
+                                                "label": "Formatted Changed at"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Additional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Notes"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "parameters": {
+                "else": 1
+            },
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 3,
+                            "module": "monday:ChangeMultipleColumnValuesV2",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 6842551
+                            },
+                            "filter": {
+                                "name": "Item Found",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{2.id}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "itemId": "{{2.id}}",
+                                "boardId": "5027984852",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "color_mm2npher",
+                                        "columnValue": {
+                                            "label": "Lead",
+                                            "settings": {
+                                                "labels": [
+                                                    {
+                                                        "id": 0,
+                                                        "hex": "#ffcb00",
+                                                        "color": 9,
+                                                        "index": 2,
+                                                        "label": "Form Completed",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 1,
+                                                        "hex": "#a9bee8",
+                                                        "color": 154,
+                                                        "index": 1,
+                                                        "label": "Lead",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 2,
+                                                        "hex": "#ff6d3b",
+                                                        "color": 19,
+                                                        "index": 3,
+                                                        "label": "Deposit Pending",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 3,
+                                                        "hex": "#00c875",
+                                                        "color": 1,
+                                                        "index": 4,
+                                                        "label": "Enrolled",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 4,
+                                                        "hex": "#df2f4a",
+                                                        "color": 2,
+                                                        "index": 5,
+                                                        "label": "Needs Scheduling",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 5,
+                                                        "hex": "#c4c4c4",
+                                                        "color": 5,
+                                                        "index": 0,
+                                                        "label": "-",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    },
+                                                    {
+                                                        "id": 6,
+                                                        "hex": "#216edf",
+                                                        "color": 153,
+                                                        "index": 6,
+                                                        "label": "Call Scheduled",
+                                                        "is_done": false,
+                                                        "is_deactivated": false
+                                                    }
+                                                ]
+                                            },
+                                            "selectType": "label2index"
+                                        }
+                                    },
+                                    {
+                                        "columnId": "long_text_mm2n7bw8",
+                                        "columnValue": {
+                                            "text": "Booking cancelled on {{formatDate(now; \"MMMM D, YYYY\"; \"America/Denver\")}}"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 762,
+                                    "y": -167
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "admin  ::  public"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Status"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "label": {
+                                                                "mode": "chose",
+                                                                "label": "Lead"
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Notes"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "create_labels_if_missing": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection (sandyzvosters-team - Sandi Ridwan)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 5,
+                            "module": "google-email:sendAnEmail",
+                            "version": 4,
+                            "filter": {
+                                "name": "Item Not Found",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{2.id}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 746,
+                                    "y": 168
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    }
+}
